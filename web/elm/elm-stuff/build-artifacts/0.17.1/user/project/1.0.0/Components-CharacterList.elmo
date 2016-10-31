@@ -1,0 +1,176 @@
+var _user$project$Components_CharacterList$characterBlockStyle = function (model) {
+	var style = _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: 'background', _1: 'grey'},
+			{ctor: '_Tuple2', _0: 'width', _1: '600px'}
+		]);
+	var _p0 = model;
+	if (_p0.ctor === 'Nothing') {
+		return A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: 'display', _1: 'none'},
+			style);
+	} else {
+		return A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: 'display', _1: 'block'},
+			style);
+	}
+};
+var _user$project$Components_CharacterList$liStyle = _elm_lang$core$Native_List.fromArray(
+	[
+		{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
+	]);
+var _user$project$Components_CharacterList$decodeName = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'dataset', 'value']),
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Components_CharacterList$initialModel = {
+	characters: _elm_lang$core$Native_List.fromArray(
+		[]),
+	character: _elm_lang$core$Maybe$Nothing
+};
+var _user$project$Components_CharacterList$filterCharacterByName = F2(
+	function (name, model) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_user$project$Character$initialModel,
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (c) {
+						return _elm_lang$core$Native_Utils.eq(c.name, name);
+					},
+					model.characters)));
+	});
+var _user$project$Components_CharacterList$characters = {
+	characters: _elm_lang$core$Native_List.fromArray(
+		[
+			{name: 'Vegeta', race: 'Sayan', description: 'Prince de la planète Vegeta'},
+			{name: 'Bulma', race: 'Human', description: 'Fille du propriétaire de Capsule Corp.'}
+		]),
+	character: _elm_lang$core$Maybe$Nothing
+};
+var _user$project$Components_CharacterList$Model = F2(
+	function (a, b) {
+		return {characters: a, character: b};
+	});
+var _user$project$Components_CharacterList$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'None':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Fetch':
+				return {ctor: '_Tuple2', _0: _user$project$Components_CharacterList$characters, _1: _elm_lang$core$Platform_Cmd$none};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: A2(
+						_user$project$Components_CharacterList$Model,
+						model.characters,
+						_elm_lang$core$Maybe$Just(
+							A2(_user$project$Components_CharacterList$filterCharacterByName, _p1._0, model))),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Components_CharacterList$FetchDetail = function (a) {
+	return {ctor: 'FetchDetail', _0: a};
+};
+var _user$project$Components_CharacterList$renderCharacterForList = function (model) {
+	return A2(
+		_elm_lang$html$Html$li,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(_user$project$Components_CharacterList$liStyle),
+						A2(
+						_elm_lang$html$Html_Events$on,
+						'click',
+						A2(_elm_lang$core$Json_Decode$map, _user$project$Components_CharacterList$FetchDetail, _user$project$Components_CharacterList$decodeName)),
+						A2(_elm_lang$html$Html_Attributes$attribute, 'data-value', model.name)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(model.name)
+					]))
+			]));
+};
+var _user$project$Components_CharacterList$renderCharacters = function (model) {
+	return A2(_elm_lang$core$List$map, _user$project$Components_CharacterList$renderCharacterForList, model.characters);
+};
+var _user$project$Components_CharacterList$Fetch = {ctor: 'Fetch'};
+var _user$project$Components_CharacterList$view = function (model) {
+	var character = function () {
+		var _p2 = model.character;
+		if (_p2.ctor === 'Nothing') {
+			return _user$project$Character$initialModel;
+		} else {
+			return _p2._0;
+		}
+	}();
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'background', _1: 'yellow'},
+								{ctor: '_Tuple2', _0: 'width', _1: '200px'},
+								{ctor: '_Tuple2', _0: 'float', _1: 'left'}
+							]))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$h2,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Character List')
+							])),
+						A2(
+						_elm_lang$html$Html$button,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Events$onClick(_user$project$Components_CharacterList$Fetch)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Fetch characters')
+							])),
+						A2(
+						_elm_lang$html$Html$ul,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						_user$project$Components_CharacterList$renderCharacters(model))
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(
+						_user$project$Components_CharacterList$characterBlockStyle(model.character))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Character$view(character)
+					]))
+			]));
+};
+var _user$project$Components_CharacterList$None = {ctor: 'None'};

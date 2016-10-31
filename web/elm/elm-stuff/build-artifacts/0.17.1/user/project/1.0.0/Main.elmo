@@ -1,0 +1,42 @@
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Main$initialModel = {characterListModel: _user$project$Components_CharacterList$initialModel};
+var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$Main$Model = function (a) {
+	return {characterListModel: a};
+};
+var _user$project$Main$CharacterListMsg = function (a) {
+	return {ctor: 'CharacterListMsg', _0: a};
+};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		var _p1 = A2(_user$project$Components_CharacterList$update, _p0._0, model.characterListModel);
+		var updateModel = _p1._0;
+		var cmd = _p1._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{characterListModel: updateModel}),
+			_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$CharacterListMsg, cmd)
+		};
+	});
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html_App$map,
+				_user$project$Main$CharacterListMsg,
+				_user$project$Components_CharacterList$view(model.characterListModel))
+			]));
+};
+var _user$project$Main$main = {
+	main: _elm_lang$html$Html_App$program(
+		{init: _user$project$Main$init, update: _user$project$Main$update, view: _user$project$Main$view, subscriptions: _user$project$Main$subscriptions})
+};
