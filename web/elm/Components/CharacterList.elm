@@ -4,7 +4,10 @@ import Html exposing (..)
 import Html.Attributes exposing (style)
 import Html.Events exposing (onClick, on)
 import Html.Attributes exposing (attribute)
-import Json.Decode exposing (string, at)
+import Json.Decode exposing (string, at, (:=))
+import Http
+import Task
+import Debug
 import Json.Decode as Json
 import List
 import Character
@@ -26,7 +29,12 @@ characters =
        ,character = Nothing
     }
 
-type Msg = None | Fetch | FetchDetail String
+type Msg =
+      None
+    | Fetch
+    | FetchDetail String
+    | FetchSucceed (List Character.Model)
+    | FetchFailed Http.Error
 
 filterCharacterByName: String -> Model -> Character.Model
 filterCharacterByName name model =
@@ -41,9 +49,24 @@ update msg model =
         None ->
             (model, Cmd.none)
         Fetch ->
-            (characters, Cmd.none)
+            (characters, Cmd.none) --(model, fetchCharacters)
+        -- FetchSucceed characterList ->
+        --     (Model characterList (Just (Character.initialModel)), Cmd.none)
+        -- FetchFailed error ->
+        --     case error of
+        --         Http.UnexpectedPayload errorMessage ->
+        --             Debug.log errorMessage (model, Cmd.none)
+        --         _ ->
+        --             (model, Cmd.none)
         FetchDetail name ->
             (Model model.characters (Just (filterCharacterByName name model)), Cmd.none)
+
+fetchCharacters: Cmd Msg
+fetchCharacters =
+    let
+        url = "/api/characters"
+    in
+        task.perform FetchFailed FetchSucceed (Http.get decodeCharacterFetch url)
 
 initialModel: Model
 initialModel =

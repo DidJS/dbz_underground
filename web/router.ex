@@ -19,6 +19,12 @@ defmodule ElmDbz.Router do
     get "/", PageController, :index
   end
 
+  scope "/api", ElmDbz do
+    pipe_through :api
+
+    resources "/characters", CharacterController, except: [:new, :edit]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ElmDbz do
   #   pipe_through :api

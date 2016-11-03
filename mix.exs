@@ -17,7 +17,7 @@ defmodule ElmDbz.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {ElmDbz, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext]]
+     applications: [:phoenix, :phoenix_html, :bolt_sips, :cowboy, :logger, :gettext]]
   end
 
   # Specifies which paths to compile per environment.
@@ -32,6 +32,8 @@ defmodule ElmDbz.Mixfile do
      {:phoenix_html, "~> 2.4"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:bolt_sips, "~>0.1"},
+     {:boltex, github: "florinpatrascu/boltex"}]
   end
 end
